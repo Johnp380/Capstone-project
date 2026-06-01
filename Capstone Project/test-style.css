@@ -1,0 +1,166 @@
+
+nav img{
+    clip-path: circle(50%);
+    width: 55px;
+    height:auto;
+    margin-left:auto;
+}
+
+
+
+
+
+nav ul{
+    
+      list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display:flex;
+  width:33%;
+  
+}
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    overflow:visible;
+}
+
+ nav ul li a {
+  display: block;
+  color: purple;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  padding: 14px 16px;
+  text-decoration: none;
+    background-color: white;
+    border-radius:10px;
+}
+
+nav div{
+    width:33%;
+    text-align:right;
+    align-items:right;
+    align-content:right;
+
+}
+
+ nav ul li a:hover {
+  background-color: #111111;
+}
+
+#title{
+  
+width:33%;
+    text-align:center;
+
+}
+
+nav h1{
+   display: block;
+   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
+  
+
+}
+
+
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background-color:#6155f5;
+}
+
+#calendar-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.controls {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    /* Beautiful blue, purple, and purplish-pink gradient */
+    background: linear-gradient(135deg, #1e3c72 0%, #5f81ba 30%, #7028e4 70%, #e5b2ca 100%);
+    background-attachment: fixed; /* Keeps the gradient smooth while scrolling */
+    color: #333;
+}
+
+#calendar-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95); /* Slight transparency to look modern */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.controls {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff; /* White text so it's readable over the gradient */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.controls h2 {
+    margin-top: 0;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+button {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #7028e4 0%, #e5b2ca 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom tweaks to make FullCalendar look great on the new background */
+.fc {
+    background: transparent;
+}
+
+.fc-toolbar-title {
+    color: #333 !important;
+}
+
+.logo-btn {
+    text-decoration: none; /* Removes the default hyperlink underline */
+    display: inline-block;
+    margin-bottom: 10px;
+    transition: transform 0.2s ease;
+}
