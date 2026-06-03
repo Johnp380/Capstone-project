@@ -4,30 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css">  
 </head>
-<body>
-  <script src="./script.js"></script>
+<body class="home-page">
+
+<nav>
+
+<ul>
+  <li><a href="./messages.html">Messages</a></li>
+
+  <!-- <li><a href="#">Communify</a></li> -->
+  <li><a href="./events.html">Events</a></li>
+</ul>
 
 
-  
-  </ul>
-
-  <div class="top-buttons">
-    <a href="./messages.html" class="nav-button">Messages</a>
-    <a href="./events.html" class="nav-button">Events</a>
-  </div>
-
-<div class="container">
-  <h1>CommUnify</h1>
-  <h2>EVENTS</h2>
-  <h2>MSGS</h2>
-  
-  
+<div class="controls">
+    <a href="index.html" class="logo-btn">
+<h1 id="title">CommUnify</h1>
+</a>
 
 </div>
+<div>
+  <a href="login.html"><img src="blank pfp.png" alt="Profile" title="Login / Sign Up"></a>
+</div>
 
-<img src="blank pfp.png">
 
+
+
+</nav>
+
+<div class="carousel">
+  <div class="carousel-track">
+    
+    <div class="carousel-slide" style="background-image: url('./people\ img1.webp');">
+      <div class="slide-content">
+        <h2>Welcome to CommUnify</h2>
+        <p>Bringing your community together</p>
+      </div>
+    </div>
+    <div class="carousel-slide" style="background-image: url('./gpsimg.jpg');">
+      <div class="slide-content">
+        <h2>Local Events</h2>
+        <p>Stay up to date with what's happening near you</p>
+      </div>
+    </div>
+    <div class="carousel-slide" style="background-image: url('./msgimg3.jpg');">
+      <div class="slide-content">
+        <h2>Community Messages</h2>
+        <p>Stay connected with your neighbors</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="carousel-btn carousel-prev">&#10094;</button>
+  <button class="carousel-btn carousel-next">&#10095;</button>
+
+  <div class="carousel-dots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+</div>
+
+<script>
+(function () {
+  var track = document.querySelector('.carousel-track');
+  if (!track) return;
+  var slides = document.querySelectorAll('.carousel-slide');
+  var dots = document.querySelectorAll('.dot');
+  var prevBtn = document.querySelector('.carousel-prev');
+  var nextBtn = document.querySelector('.carousel-next');
+  var current = 0;
+  var autoPlay;
+
+  function goTo(index) {
+    current = (index + slides.length) % slides.length;
+    track.style.transform = 'translateX(-' + current * 100 + '%)';
+    dots.forEach(function (d, i) { d.classList.toggle('active', i === current); });
+  }
+
+  function startAutoPlay() {
+    autoPlay = setInterval(function () { goTo(current + 1); }, 5000);
+  }
+
+  prevBtn.addEventListener('click', function () { clearInterval(autoPlay); goTo(current - 1); startAutoPlay(); });
+  nextBtn.addEventListener('click', function () { clearInterval(autoPlay); goTo(current + 1); startAutoPlay(); });
+  dots.forEach(function (dot, i) {
+    dot.addEventListener('click', function () { clearInterval(autoPlay); goTo(i); startAutoPlay(); });
+  });
+
+  startAutoPlay();
+})();
+</script>
+
+
+<script src="./script.js" defer></script>
 </body>
 </html>

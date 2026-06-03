@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CommUnify – Login / Sign Up</title>
+    <link rel="stylesheet" href="./test-style.css">
+    <style>
+        .auth-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .auth-card {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            padding: 40px 48px;
+            width: 100%;
+            max-width: 460px;
+        }
+
+        .auth-card h2 {
+            text-align: center;
+            color: #5a0ecc;
+            margin-top: 0;
+            margin-bottom: 24px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 1.8rem;
+        }
+
+        .tab-row {
+            display: flex;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 28px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .tab-btn:hover {
+            color: #7028e4;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .tab-btn.active {
+            color: #7028e4;
+            border-bottom-color: #7028e4;
+        }
+
+        .form-section { display: none; }
+        .form-section.visible { display: block; }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1.5px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #7028e4;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 14px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            background: linear-gradient(135deg, #7028e4 0%, #e5b2ca 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .switch-hint {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        .switch-hint a {
+            color: #7028e4;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .switch-hint a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="./messages.html">Messages</a></li>
+        <li><a href="./events.html">Events</a></li>
+    </ul>
+
+    <div class="controls">
+        <a href="index.html" class="logo-btn">
+            <h1 id="title">CommUnify</h1>
+        </a>
+    </div>
+
+    <div>
+        <a href="login.html"><img src="blank pfp.png" alt="Profile" title="Login / Sign Up"></a>
+    </div>
+</nav>
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <h2>Welcome to CommUnify</h2>
+
+        <div class="tab-row">
+            <button class="tab-btn active" onclick="showTab('login', this)">Log In</button>
+            <button class="tab-btn" onclick="showTab('signup', this)">Sign Up</button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div id="login" class="form-section visible">
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="submit-btn">Log In</button>
+            </form>
+            <p class="switch-hint">Don't have an account? <a href="#" onclick="showTab('signup', document.querySelectorAll('.tab-btn')[1])">Sign up</a></p>
+        </div>
+
+        <!-- SIGN UP FORM -->
+        <div id="signup" class="form-section">
+            <form onsubmit="handleSignup(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" placeholder="Jane" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" placeholder="Doe" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="(555) 000-0000">
+                </div>
+                <div class="form-group">
+                    <label for="city">City / Neighborhood</label>
+                    <input type="text" id="city" placeholder="e.g. Downtown, Westside">
+                </div>
+                <div class="form-group">
+                    <label for="interests">Interests</label>
+                    <select id="interests">
+                        <option value="">Select a primary interest…</option>
+                        <option>Community Events</option>
+                        <option>Volunteering</option>
+                        <option>Local Sports</option>
+                        <option>Arts & Culture</option>
+                        <option>Food & Markets</option>
+                        <option>Environment</option>
+                        <option>Education</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" placeholder="At least 8 characters" minlength="8" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="submit-btn">Create Account</button>
+            </form>
+            <p class="switch-hint">Already have an account? <a href="#" onclick="showTab('login', document.querySelectorAll('.tab-btn')[0])">Log in</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showTab(tabId, btn) {
+        document.querySelectorAll('.form-section').forEach(s => s.classList.remove('visible'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.add('visible');
+        btn.classList.add('active');
+    }
+
+    function handleLogin(e) {
+        e.preventDefault();
+        alert('Logged in successfully! (connect to your backend to persist this)');
+    }
+
+    function handleSignup(e) {
+        e.preventDefault();
+        const pw = document.getElementById('signup-password').value;
+        const confirm = document.getElementById('confirm-password').value;
+        if (pw !== confirm) {
+            alert('Passwords do not match.');
+            return;
+        }
+        alert('Account created! Welcome to CommUnify.');
+    }
+</script>
+
+</body>
+</html>
