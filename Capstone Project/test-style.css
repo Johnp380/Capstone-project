@@ -1,118 +1,98 @@
 
-nav img{
-    clip-path: circle(50%);
-    width: 55px;
-    height:auto;
-    margin-left:auto;
+nav img {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: auto;
+    border: 2px solid rgba(255, 255, 255, 0.45);
+    transition: border-color 0.2s, transform 0.2s;
 }
 
-
-
-
-
-nav ul{
-    
-      list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display:flex;
-  width:33%;
-  
+nav img:hover {
+    border-color: white;
+    transform: scale(1.08);
 }
 
-nav{
-    display:flex;
-    justify-content:space-between;
-    overflow:visible;
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 33%;
 }
 
- nav ul li a {
-  display: block;
-  color: purple;
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  padding: 14px 16px;
-  text-decoration: none;
-    background-color: white;
-    border-radius:10px;
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: visible;
+    padding: 10px 24px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-nav div{
-    width:33%;
-    text-align:right;
-    align-items:right;
-    align-content:right;
-
-}
-
- nav ul li a:hover {
-  background-color: #111111;
-}
-
-#title{
-  
-width:33%;
-    text-align:center;
-
-}
-
-nav h1{
-   display: block;
-   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
-  
-
-}
-
-
-
-
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 40px;
-    background-color:#6155f5;
-}
-
-#calendar-container {
-    max-width: 900px;
-    margin: 0 auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.controls {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-button {
-    padding: 10px 15px;
-    background-color: #007bff;
+nav ul li a {
+    display: block;
     color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding: 9px 20px;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    transition: background 0.2s, transform 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 
-button:hover {
-    background-color: #0056b3;
+nav div {
+    width: 33%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+nav ul li a:hover {
+    background: linear-gradient(135deg, #7028e4, #e5b2ca);
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(112, 40, 228, 0.4);
+}
+
+#title {
+    width: 33%;
+    text-align: center;
+}
+
+nav h1 {
+    display: block;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.logo-btn {
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 10px;
+    transition: transform 0.2s ease;
 }
 
 body {
     font-family: Arial, sans-serif;
     margin: 40px;
-    /* Beautiful blue, purple, and purplish-pink gradient */
     background: linear-gradient(135deg, #1e3c72 0%, #5f81ba 30%, #7028e4 70%, #e5b2ca 100%);
-    background-attachment: fixed; /* Keeps the gradient smooth while scrolling */
+    background-attachment: fixed;
     color: #333;
 }
 
 #calendar-container {
     max-width: 900px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.95); /* Slight transparency to look modern */
+    background: rgba(255, 255, 255, 0.95);
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
@@ -121,7 +101,7 @@ body {
 .controls {
     text-align: center;
     margin-bottom: 20px;
-    color: #ffffff; /* White text so it's readable over the gradient */
+    color: #ffffff;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
@@ -156,11 +136,4 @@ button:hover {
 
 .fc-toolbar-title {
     color: #333 !important;
-}
-
-.logo-btn {
-    text-decoration: none; /* Removes the default hyperlink underline */
-    display: inline-block;
-    margin-bottom: 10px;
-    transition: transform 0.2s ease;
 }

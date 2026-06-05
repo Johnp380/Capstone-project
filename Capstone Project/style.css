@@ -18,53 +18,73 @@
 }
 
 
-nav img{
-    clip-path: circle(50%);
-    width: 55px;
-    height:auto;
-    margin-left:auto;
+nav img {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: auto;
+    border: 2px solid rgba(255, 255, 255, 0.45);
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+nav img:hover {
+    border-color: white;
+    transform: scale(1.08);
 }
 
 
 
 
 
-nav ul{
-    
-      list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display:flex;
-  width:33%;
-  
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 33%;
 }
 
-nav{
-    display:flex;
-    justify-content:space-between;
-    overflow:visible;
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: visible;
+    padding: 10px 24px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
- nav ul li a {
-  display: block;
-  color: purple;
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  padding: 14px 16px;
-  text-decoration: none;
-    background-color: white;
-    border-radius:10px;
+nav ul li a {
+    display: block;
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding: 9px 20px;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    transition: background 0.2s, transform 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 
-nav div{
-    width:33%;
-    text-align:right;
-    align-items:right;
-    align-content:right;
-
+nav div {
+    width: 33%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
- nav ul li a:hover {
-  background-color: #111111;
+nav ul li a:hover {
+    background: linear-gradient(135deg, #7028e4, #e5b2ca);
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(112, 40, 228, 0.4);
 }
 
 #title{
@@ -154,10 +174,6 @@ body.home-page {
 
 body.home-page nav {
     flex-shrink: 0;
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* ── Carousel ── */
@@ -226,31 +242,34 @@ body.home-page nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.25);
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 255, 255, 0.4);
     color: white;
-    font-size: 1.5rem;
-    width: 50px;
-    height: 50px;
+    font-size: 1.3rem;
+    width: 54px;
+    height: 54px;
     padding: 0;
     cursor: pointer;
     border-radius: 50%;
     z-index: 10;
-    transition: background 0.2s, transform 0.2s;
+    transition: background 0.25s, transform 0.25s, box-shadow 0.25s, border-color 0.25s;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
 .carousel-btn:hover {
-    background: rgba(255, 255, 255, 0.45);
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: none;
+    background: linear-gradient(135deg, rgba(112, 40, 228, 0.55), rgba(229, 178, 202, 0.55));
+    border-color: rgba(255, 255, 255, 0.65);
+    transform: translateY(-50%) scale(1.12);
+    box-shadow: 0 6px 22px rgba(112, 40, 228, 0.4);
 }
 
-.carousel-prev { left: 24px; }
-.carousel-next { right: 24px; }
+.carousel-prev { left: 28px; }
+.carousel-next { right: 28px; }
 
 .carousel-dots {
     position: absolute;
@@ -262,18 +281,19 @@ body.home-page nav {
 }
 
 .dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
     background: rgba(255, 255, 255, 0.45);
     cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
+    transition: background 0.3s, width 0.3s, opacity 0.3s;
     border: none;
 }
 
 .dot.active {
     background: white;
-    transform: scale(1.25);
+    width: 28px;
+    opacity: 1;
 }
 
 
