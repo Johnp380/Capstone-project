@@ -3,48 +3,522 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./style.css"> 
+    <title>CommUnify – Messages</title>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        body.messages-page {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        body.messages-page nav {
+            flex-shrink: 0;
+        }
+
+        /* ── Two-panel layout ── */
+        .msg-layout {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            gap: 0;
+            padding: 20px 28px 24px;
+            gap: 16px;
+            box-sizing: border-box;
+        }
+
+        /* ── Sidebar ── */
+        .msg-sidebar {
+            width: 270px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.13);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .sidebar-header {
+            padding: 18px 18px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .sidebar-header h2 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            opacity: 0.75;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        .convo-list {
+            list-style: none;
+            margin: 0;
+            padding: 8px 0;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .convo-list::-webkit-scrollbar { width: 4px; }
+        .convo-list::-webkit-scrollbar-track { background: transparent; }
+        .convo-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); border-radius: 4px; }
+
+        .convo-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 16px;
+            cursor: pointer;
+            border-radius: 10px;
+            margin: 2px 8px;
+            transition: background 0.2s;
+        }
+
+        .convo-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .convo-item.active {
+            background: linear-gradient(135deg, rgba(112,40,228,0.45), rgba(229,178,202,0.35));
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .convo-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #7028e4, #e5b2ca);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+            flex-shrink: 0;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        .convo-info {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .convo-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .convo-preview {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.6);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 2px;
+        }
+
+        /* ── Main panel ── */
+        .msg-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.13);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .msg-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 22px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            flex-shrink: 0;
+        }
+
+        .msg-channel-name {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: white;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        .msg-member-count {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.55);
+            margin-left: 4px;
+        }
+
+        /* ── Feed ── */
+        .msg-feed {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .msg-feed::-webkit-scrollbar { width: 4px; }
+        .msg-feed::-webkit-scrollbar-track { background: transparent; }
+        .msg-feed::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); border-radius: 4px; }
+
+        /* Date divider */
+        .msg-date-divider {
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.45);
+            margin: 4px 0;
+            position: relative;
+        }
+
+        .msg-date-divider::before,
+        .msg-date-divider::after {
+            content: '';
+            display: inline-block;
+            width: 30%;
+            height: 1px;
+            background: rgba(255,255,255,0.15);
+            vertical-align: middle;
+            margin: 0 10px;
+        }
+
+        /* Message row */
+        .msg-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .msg-row.own {
+            flex-direction: row-reverse;
+        }
+
+        .msg-sender-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #5f81ba, #7028e4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .msg-bubble-group {
+            display: flex;
+            flex-direction: column;
+            max-width: 62%;
+            gap: 4px;
+        }
+
+        .msg-row.own .msg-bubble-group {
+            align-items: flex-end;
+        }
+
+        .msg-sender-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 2px;
+            padding: 0 4px;
+        }
+
+        .msg-row.own .msg-sender-name { display: none; }
+
+        .msg-bubble {
+            padding: 10px 15px;
+            border-radius: 18px;
+            font-size: 0.92rem;
+            line-height: 1.45;
+            word-break: break-word;
+        }
+
+        /* Others' messages */
+        .msg-bubble.other {
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: white;
+            border-bottom-left-radius: 4px;
+        }
+
+        /* Own messages */
+        .msg-bubble.own {
+            background: linear-gradient(135deg, #7028e4, #c084c8);
+            color: white;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 14px rgba(112, 40, 228, 0.35);
+        }
+
+        .msg-time {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            padding: 0 4px;
+            margin-top: 2px;
+        }
+
+        /* ── Compose bar ── */
+        .msg-compose {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            flex-shrink: 0;
+        }
+
+        .msg-input {
+            flex: 1;
+            padding: 11px 18px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.12);
+            color: white;
+            font-size: 0.93rem;
+            font-family: Arial, sans-serif;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .msg-input::placeholder { color: rgba(255,255,255,0.45); }
+
+        .msg-input:focus {
+            border-color: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.18);
+        }
+
+        .msg-send-btn {
+            padding: 11px 24px;
+            background: linear-gradient(135deg, #7028e4, #e5b2ca);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(112,40,228,0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+            flex-shrink: 0;
+        }
+
+        .msg-send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(112,40,228,0.5);
+        }
+    </style>
 </head>
-<body>
- 
-    
+<body class="messages-page">
 
-
-
-  
- <!--- 
-</div>
-<div class="top-buttons">
-    <a href="./messages.html" class="nav-button">Messages</a>
-    <a href="./events.html" class="nav-button">Events</a>
-    
-  </div> --> 
 <nav>
-
-<ul>
-  <li><a href="./messages.html">Messages</a></li>
-  
-  <!-- <li><a href="#">Communify</a></li> -->
-  <li><a href="./events.html">Events</a></li>
-</ul>
-
-<div class="controls">
-    <a href="index.html" class="logo-btn">
-<h1 id="title">CommUnify</h1>
-</a>
-   
-</div>
-
-<div>
-  <a href="login.html"><img src="blank pfp.png" alt="Profile" title="Login / Sign Up"></a>
-</div>
-
+    <ul>
+        <li><a href="./messages.html">Messages</a></li>
+        <li><a href="./events.html">Events</a></li>
+    </ul>
+    <div class="controls">
+        <a href="index.html" class="logo-btn">
+            <h1 id="title">CommUnify</h1>
+        </a>
+    </div>
+    <div>
+        <a href="login.html"><img src="blank pfp.png" alt="Profile" title="Login / Sign Up"></a>
+    </div>
 </nav>
 
+<div class="msg-layout">
 
+    <!-- Sidebar -->
+    <aside class="msg-sidebar">
+        <div class="sidebar-header">
+            <h2>Community Chats</h2>
+        </div>
+        <ul class="convo-list" id="convo-list">
+            <li class="convo-item active" data-channel="Neighborhood General" data-members="24">
+                <div class="convo-avatar">NG</div>
+                <div class="convo-info">
+                    <span class="convo-name">Neighborhood General</span>
+                    <span class="convo-preview">Farmer's market this Saturday!</span>
+                </div>
+            </li>
+            <li class="convo-item" data-channel="Lost & Found" data-members="12">
+                <div class="convo-avatar">LF</div>
+                <div class="convo-info">
+                    <span class="convo-name">Lost &amp; Found</span>
+                    <span class="convo-preview">Found a black lab near Oak St</span>
+                </div>
+            </li>
+            <li class="convo-item" data-channel="Local Events" data-members="38">
+                <div class="convo-avatar">LE</div>
+                <div class="convo-info">
+                    <span class="convo-name">Local Events</span>
+                    <span class="convo-preview">Park cleanup next weekend!</span>
+                </div>
+            </li>
+            <li class="convo-item" data-channel="Safety Watch" data-members="19">
+                <div class="convo-avatar">SW</div>
+                <div class="convo-info">
+                    <span class="convo-name">Safety Watch</span>
+                    <span class="convo-preview">Streetlight on Maple is out again</span>
+                </div>
+            </li>
+            <li class="convo-item" data-channel="Buy & Sell" data-members="51">
+                <div class="convo-avatar">BS</div>
+                <div class="convo-info">
+                    <span class="convo-name">Buy &amp; Sell</span>
+                    <span class="convo-preview">Free moving boxes, porch pickup</span>
+                </div>
+            </li>
+        </ul>
+    </aside>
 
+    <!-- Main chat panel -->
+    <section class="msg-main">
+        <div class="msg-header">
+            <span class="msg-channel-name" id="channel-name">Neighborhood General</span>
+            <span class="msg-member-count" id="member-count">24 members</span>
+        </div>
 
- <script src="./script.js"></script>
+        <div class="msg-feed" id="msg-feed">
+            <div class="msg-date-divider">Today</div>
+
+            <div class="msg-row">
+                <div class="msg-sender-avatar">MR</div>
+                <div class="msg-bubble-group">
+                    <span class="msg-sender-name">Maria R.</span>
+                    <div class="msg-bubble other">Good morning everyone! Just a reminder that the farmer's market is this Saturday at 9am. 🥦🍓</div>
+                    <span class="msg-time">9:14 AM</span>
+                </div>
+            </div>
+
+            <div class="msg-row">
+                <div class="msg-sender-avatar">JK</div>
+                <div class="msg-bubble-group">
+                    <span class="msg-sender-name">James K.</span>
+                    <div class="msg-bubble other">Thanks for the heads up! Will the Johnson farm stand be there this week?</div>
+                    <span class="msg-time">9:22 AM</span>
+                </div>
+            </div>
+
+            <div class="msg-row own">
+                <div class="msg-sender-avatar">Me</div>
+                <div class="msg-bubble-group">
+                    <div class="msg-bubble own">I think so! I saw their truck parked on Cedar Ave yesterday.</div>
+                    <span class="msg-time">9:31 AM</span>
+                </div>
+            </div>
+
+            <div class="msg-row">
+                <div class="msg-sender-avatar">AP</div>
+                <div class="msg-bubble-group">
+                    <span class="msg-sender-name">Alice P.</span>
+                    <div class="msg-bubble other">Does anyone know if there's parking nearby? Last time it was packed.</div>
+                    <span class="msg-time">9:45 AM</span>
+                </div>
+            </div>
+
+            <div class="msg-row own">
+                <div class="msg-sender-avatar">Me</div>
+                <div class="msg-bubble-group">
+                    <div class="msg-bubble own">The library lot on 3rd St is free on weekends, only a short walk!</div>
+                    <span class="msg-time">9:47 AM</span>
+                </div>
+            </div>
+
+            <div class="msg-row">
+                <div class="msg-sender-avatar">MR</div>
+                <div class="msg-bubble-group">
+                    <span class="msg-sender-name">Maria R.</span>
+                    <div class="msg-bubble other">Great tip! See everyone there 😊</div>
+                    <span class="msg-time">9:50 AM</span>
+                </div>
+            </div>
+        </div>
+
+        <form class="msg-compose" id="msg-form">
+            <input class="msg-input" id="msg-input" type="text" placeholder="Send a message to Neighborhood General…" autocomplete="off">
+            <button class="msg-send-btn" type="submit">Send</button>
+        </form>
+    </section>
+
+</div>
+
+<script>
+(function () {
+    var form = document.getElementById('msg-form');
+    var input = document.getElementById('msg-input');
+    var feed = document.getElementById('msg-feed');
+    var channelName = document.getElementById('channel-name');
+    var memberCount = document.getElementById('member-count');
+
+    function now() {
+        var d = new Date();
+        var h = d.getHours(), m = d.getMinutes();
+        var ampm = h >= 12 ? 'PM' : 'AM';
+        h = h % 12 || 12;
+        return h + ':' + (m < 10 ? '0' : '') + m + ' ' + ampm;
+    }
+
+    function addMessage(text) {
+        var row = document.createElement('div');
+        row.className = 'msg-row own';
+        row.innerHTML =
+            '<div class="msg-sender-avatar">Me</div>' +
+            '<div class="msg-bubble-group">' +
+                '<div class="msg-bubble own">' + escHtml(text) + '</div>' +
+                '<span class="msg-time">' + now() + '</span>' +
+            '</div>';
+        feed.appendChild(row);
+        feed.scrollTop = feed.scrollHeight;
+    }
+
+    function escHtml(s) {
+        return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var text = input.value.trim();
+        if (!text) return;
+        addMessage(text);
+        input.value = '';
+        input.focus();
+    });
+
+    // Switch channels
+    document.getElementById('convo-list').addEventListener('click', function (e) {
+        var item = e.target.closest('.convo-item');
+        if (!item) return;
+        document.querySelectorAll('.convo-item').forEach(function (el) { el.classList.remove('active'); });
+        item.classList.add('active');
+        var ch = item.dataset.channel;
+        channelName.textContent = ch;
+        memberCount.textContent = item.dataset.members + ' members';
+        input.placeholder = 'Send a message to ' + ch + '…';
+    });
+
+    feed.scrollTop = feed.scrollHeight;
+})();
+</script>
+
+<script src="./script.js"></script>
 </body>
 </html>
